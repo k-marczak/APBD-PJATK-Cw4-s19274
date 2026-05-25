@@ -10,9 +10,9 @@ namespace web_api_2.Controllers;
 [Route("api/pcs")]
 public class PcsController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly Zadanie4DbContext _context;
 
-    public PcsController(AppDbContext context)
+    public PcsController(Zadanie4DbContext context)
     {
         _context = context;
     }
@@ -39,10 +39,10 @@ public class PcsController : ControllerBase
     public async Task<ActionResult<PcWithComponentsDto>> GetPcComponents(int id)
     {
         var pc = await _context.PCs
-            .Include(pc => pc.PCComponents)
+            .Include(pc => pc.PcComponents)
                 .ThenInclude(pcComponent => pcComponent.Component)
                     .ThenInclude(component => component.Manufacturer)
-            .Include(pc => pc.PCComponents)
+            .Include(pc => pc.PcComponents)
                 .ThenInclude(pcComponent => pcComponent.Component)
                     .ThenInclude(component => component.Type)
             .FirstOrDefaultAsync(pc => pc.Id == id);
@@ -60,7 +60,7 @@ public class PcsController : ControllerBase
             Warranty = pc.Warranty,
             CreatedAt = pc.CreatedAt,
             Stock = pc.Stock,
-            Components = pc.PCComponents.Select(pcComponent => new PcComponentDto
+            Components = pc.PcComponents.Select(pcComponent => new PcComponentDto
             {
                 Amount = pcComponent.Amount,
                 Component = new ComponentDto
@@ -96,7 +96,7 @@ public class PcsController : ControllerBase
             return BadRequest("Field Name is required...");
         }
 
-        var pc = new PC
+        var pc = new Pc
         {
             Name = request.Name,
             Weight = request.Weight,
@@ -161,7 +161,7 @@ public class PcsController : ControllerBase
     public async Task<IActionResult> DeletePc(int id)
     {
         var pc = await _context.PCs
-            .Include(pc => pc.PCComponents)
+            .Include(pc => pc.PcComponents)
             .FirstOrDefaultAsync(pc => pc.Id == id);
 
         if (pc is null)
@@ -169,7 +169,7 @@ public class PcsController : ControllerBase
             return NotFound();
         }
 
-        _context.PCComponents.RemoveRange(pc.PCComponents);
+        _context.PcComponents.RemoveRange(pc.PcComponents);
         _context.PCs.Remove(pc);
 
         await _context.SaveChangesAsync();

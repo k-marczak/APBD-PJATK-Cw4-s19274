@@ -12,5 +12,5 @@ public class Component
     public int ComponentTypeId { get; set; }
     public ComponentType Type { get; set; } = null!;
 
-    public ICollection<PCComponent> PCComponents { get; set; } = new List<PCComponent>();
+    public ICollection<PcComponent> PcComponents { get; set; } = new List<PcComponent>();
 }

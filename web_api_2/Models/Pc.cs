@@ -1,6 +1,6 @@
 ﻿namespace web_api_2.Models;
 
-public class PC
+public class Pc
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;
@@ -9,5 +9,5 @@ public class PC
     public DateTime CreatedAt { get; set; }
     public int Stock { get; set; }
 
-    public ICollection<PCComponent> PCComponents { get; set; } = new List<PCComponent>();
+    public ICollection<PcComponent> PcComponents { get; set; } = new List<PcComponent>();
 }

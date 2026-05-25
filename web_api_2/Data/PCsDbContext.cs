@@ -44,7 +44,7 @@ public class PCsDbContext : DbContext
             entity.HasData(
                 new ComponentType { Id = 1, Abbreviation = "CPU", Name = "Procesor" },
                 new ComponentType { Id = 2, Abbreviation = "GPU", Name = "Graphic" },
-                new ComponentType { Id = 3, Abbreviation = "SSD", Name = "Disk" }
+                new ComponentType { Id = 3, Abbreviation = "RAM", Name = "Memory" }
             );
         });
         
